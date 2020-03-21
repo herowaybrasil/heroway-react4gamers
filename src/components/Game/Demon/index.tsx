@@ -1,7 +1,7 @@
 import React from 'react';
 import { IPosition } from '../../../services/moviment';
-import useHeroMoviment from '../../../services/useHeroMoviment';
-import { DEMON_TILE_SIZE, TILE_SIZE } from '../../../settings/constants';
+import useEnemyMoviment from '../../../services/useEnemyMoviment';
+import { DEMON_TILE_SIZE, EDirections, TILE_SIZE } from '../../../settings/constants';
 import './Demon.css';
 
 interface IProps {
@@ -9,7 +9,8 @@ interface IProps {
 }
 
 function Demon(props: IProps) {
-  const { position, direction } = useHeroMoviment(props.initialPosition, 2);
+  // const [direction, position] = [EDirections.LEFT, props.initialPosition];
+  const { position, direction } = useEnemyMoviment(props.initialPosition);
 
   return (
     <div
@@ -23,7 +24,7 @@ function Demon(props: IProps) {
         backgroundRepeat: 'no-repeat',
         backgroundPosition: `0px 0px`,
         animation: 'demon 1s steps(4) infinite',
-        transform: `scaleX(${direction === 'LEFT' ? -1 : 1})`,
+        transform: `scaleX(${direction === EDirections.LEFT ? -1 : 1})`,
         zIndex: 1,
       }}
     />

@@ -1,6 +1,6 @@
 import React from 'react';
 import { IPosition } from '../../../services/moviment';
-import useEnemyMoviment from '../../../services/useEnemyMoviment';
+import useHeroMoviment from '../../../services/useHeroMoviment';
 import { HELMET_OFFSET, TILE_SIZE } from '../../../settings/constants';
 import './Player.css';
 
@@ -9,7 +9,7 @@ interface IProps {
 }
 
 function Hero(props: IProps) {
-  const { position, direction } = useEnemyMoviment(props.initialPosition);
+  const { position, direction } = useHeroMoviment(props.initialPosition);
 
   return (
     <div

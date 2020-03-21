@@ -1,5 +1,5 @@
-import React from 'react';
-import boardIMG from '../../../assets/tileset.gif';
+import React, { PureComponent } from 'react';
+import { ECanvas, ICanvas } from '../../../services/moviment';
 import { GAME_SIZE } from '../../../settings/constants';
 import Chest from '../Chest';
 import Demon from '../Demon';
@@ -8,52 +8,62 @@ import MiniDemon from '../MiniDemon';
 import Trap from '../Trap';
 
 interface IProps {
-  canvas: number[][];
+  canvas: ICanvas;
 }
 
-function Board(props: React.PropsWithChildren<IProps>) {
-  function render() {
-    const els = [];
+class Board extends PureComponent<IProps> {
+  state = { enemies: undefined };
 
-    for (let y = 0; y < props.canvas.length; y++) {
-      const canvasY = props.canvas[y];
+  componentDidMount() {
+    this.renderEnemies();
+  }
+
+  renderEnemies = () => {
+    const canvas = this.props.canvas;
+    const enemies = [];
+
+    for (let y = 0; y < canvas.length; y++) {
+      const canvasY = canvas[y];
+
       for (let x = 0; x < canvasY.length; x++) {
-        const canvasYX = props.canvas[y][x];
+        const canvasYX = canvas[y][x];
+        const position = { x: x, y: y };
+        const key = `${x}-${y}`;
 
-        if (canvasYX === 2) {
-          els.push(<Trap position={{ x: x, y: y }} />);
+        if (canvasYX === ECanvas.TRAP) {
+          enemies.push(<Trap key={key} position={position} />);
         }
 
-        if (canvasYX === 3) {
-          els.push(<MiniDemon initialPosition={{ x: x, y: y }} />);
+        if (canvasYX === ECanvas.MINI_DEMON) {
+          enemies.push(<MiniDemon key={key} initialPosition={position} />);
         }
 
-        if (canvasYX === 4) {
-          els.push(<Demon initialPosition={{ x: x, y: y }} />);
+        if (canvasYX === ECanvas.DEMON) {
+          enemies.push(<Demon key={key} initialPosition={position} />);
         }
 
-        if (canvasYX === 5) {
-          els.push(<Chest position={{ x: x, y: y }} />);
+        if (canvasYX === ECanvas.CHEST) {
+          enemies.push(<Chest key={key} position={position} />);
         }
 
-        if (canvasYX === 6) {
-          els.push(<Hero initialPosition={{ x: x, y: y }} />);
+        if (canvasYX === ECanvas.HERO) {
+          enemies.push(<Hero key={key} initialPosition={position} />);
         }
       }
     }
 
-    return els;
+    this.setState({ enemies });
+  };
+
+  render() {
+    return (
+      <>
+        <img src="./assets/tileset.gif" alt="Cenário" width={GAME_SIZE} height={GAME_SIZE} />
+        {this.props.children}
+        {this.state.enemies}
+      </>
+    );
   }
-
-  const els = render();
-
-  return (
-    <>
-      <img src={boardIMG} alt="Cenário" width={GAME_SIZE} height={GAME_SIZE} />
-      {props.children}
-      {els}
-    </>
-  );
 }
 
 export default Board;

@@ -1,13 +1,14 @@
 import React from 'react';
 import { IPosition } from '../../../services/moviment';
 import useEnemyMoviment from '../../../services/useEnemyMoviment';
-import { HELMET_OFFSET, TILE_SIZE } from '../../../settings/constants';
+import { EDirections, HELMET_OFFSET, TILE_SIZE } from '../../../settings/constants';
 
 interface IProps {
   initialPosition: IPosition;
 }
 
 function MiniDemon(props: IProps) {
+  // const [direction, position] = [EDirections.LEFT, props.initialPosition];
   const { position, direction } = useEnemyMoviment(props.initialPosition);
 
   return (
@@ -22,7 +23,7 @@ function MiniDemon(props: IProps) {
         backgroundRepeat: 'no-repeat',
         backgroundPosition: `0px -${TILE_SIZE - HELMET_OFFSET}px`,
         animation: 'player 1s steps(4) infinite',
-        transform: `scaleX(${direction === 'LEFT' ? -1 : 1})`,
+        transform: `scaleX(${direction === EDirections.LEFT ? -1 : 1})`,
       }}
     />
   );

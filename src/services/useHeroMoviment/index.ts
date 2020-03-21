@@ -1,11 +1,9 @@
 import useEventListener from '@use-it/event-listener';
 import { useState } from 'react';
 import { EDirections } from '../../settings/constants';
-import { checkNextMoveIsValid, getNewPosition, IPosition } from '../moviment';
+import { getNewPosition, IPosition } from '../moviment';
 
-// ---------------------- //
-
-export default function useHeroMoviment(initialPositions: IPosition, sqm?: number) {
+export default function useHeroMoviment(initialPositions: IPosition) {
   const [position, setPosition] = useState<IPosition>(initialPositions);
   const [direction, setDirection] = useState<EDirections>(EDirections.LEFT);
 
@@ -18,14 +16,10 @@ export default function useHeroMoviment(initialPositions: IPosition, sqm?: numbe
 
     const keyDirection = key.replace('Arrow', '').toUpperCase() as EDirections;
     const newPosition = getNewPosition(keyDirection, position);
-    const nextMoveIsAllowed = checkNextMoveIsValid(newPosition, sqm);
+    setPosition(newPosition);
 
-    if (nextMoveIsAllowed) {
-      setPosition(newPosition);
-
-      if (keyDirection === EDirections.LEFT || keyDirection === EDirections.RIGHT) {
-        setDirection(keyDirection);
-      }
+    if (keyDirection === EDirections.LEFT || keyDirection === EDirections.RIGHT) {
+      setDirection(keyDirection);
     }
   });
 
