@@ -24,15 +24,16 @@ function Game() {
     <>
       <button
         style={{
-          position: 'fixed',
+          position: 'absolute',
           top: 10,
           right: 10,
           padding: 10,
-          border: 0,
+          border: '1px solid white',
           fontSize: 18,
           color: 'white',
           background: 'red',
           cursor: 'pointer',
+          zIndex: 1,
         }}
         onClick={() => setDebug(!debug)}
       >
