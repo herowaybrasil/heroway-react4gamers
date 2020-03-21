@@ -1,15 +1,13 @@
 import React from 'react';
+import { GAME_SIZE } from '../settings/constants';
 import './App.css';
-import Board from './features/Board';
-import Character from './features/Player';
-
+import Game from './Game';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <Board />
-        <Character />
+      <header className="App-header" style={{ width: GAME_SIZE, height: GAME_SIZE }}>
+        <Game />
       </header>
     </div>
   );

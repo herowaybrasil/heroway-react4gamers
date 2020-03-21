@@ -1,12 +1,13 @@
-export const MAX_STEP = 3;
+export const TILE_SIZE = 48;
+export const HELMET_OFFSET = 12;
 
-export const SIZE = 32;
+export const DEMON_TILE_SIZE = TILE_SIZE * 2;
 
-export const DIRECTION = {
-  DOWN: 0,
-  LEFT: SIZE * 1,
-  RIGHT: SIZE * 2,
-  UP: SIZE * 3
-};
+export const GAME_SIZE = TILE_SIZE * 20;
 
-export const GAME_SIZE = 960;
+export enum EDirections {
+  UP = 'UP',
+  RIGHT = 'RIGHT',
+  DOWN = 'DOWN',
+  LEFT = 'LEFT',
+}
