@@ -1,7 +1,8 @@
 import React from 'react';
-import { IPosition } from '../../../services/moviment';
+import { IPosition } from '../../../services/canvas';
 import useEnemyMoviment from '../../../services/useEnemyMoviment';
 import { EDirections, HELMET_OFFSET, TILE_SIZE } from '../../../settings/constants';
+import './MiniDemon.css';
 
 interface IProps {
   initialPosition: IPosition;
@@ -22,7 +23,7 @@ function MiniDemon(props: IProps) {
         backgroundImage: `url(./assets/mini-demon.png)`,
         backgroundRepeat: 'no-repeat',
         backgroundPosition: `0px -${TILE_SIZE - HELMET_OFFSET}px`,
-        animation: 'player 1s steps(4) infinite',
+        animation: 'mini-demon-animation 1s steps(4) infinite',
         transform: `scaleX(${direction === EDirections.LEFT ? -1 : 1})`,
       }}
     />

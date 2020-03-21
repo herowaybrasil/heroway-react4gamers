@@ -1,5 +1,5 @@
 import React from 'react';
-import { ECanvas, IPosition } from '../../../../services/moviment';
+import { ECanvas, IPosition } from '../../../../services/canvas';
 import { TILE_SIZE } from '../../../../settings/constants';
 
 interface IProps {

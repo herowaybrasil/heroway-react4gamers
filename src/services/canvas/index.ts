@@ -5,9 +5,6 @@ export interface IPosition {
   y: number;
 }
 
-export type IEnemies = 'MiniDemon' | 'Demon';
-export type ICharacters = 'Hero' | IEnemies;
-
 export enum ECanvas {
   MOVIMENT = 0, // Espaços Disponíveis para movimento
   WALL = 1, // Parede
@@ -19,6 +16,9 @@ export enum ECanvas {
   CHEST = 7, // Baú
   HERO = 8, // Hero
 }
+
+export type ICanvas = ECanvas[][];
+
 const {
   MOVIMENT: MV,
   WALL: WL,
@@ -31,7 +31,6 @@ const {
   HERO: HE,
 } = ECanvas;
 
-export type ICanvas = ECanvas[][];
 export const canvas: ICanvas = [
   [WL, WL, WL, WL, WL, WL, WL, WL, WL, WL, WL, WL, WL, DR, DR, WL, WL, WL, WL, WL],
   [WL, WL, WL, WL, WL, WL, WL, WL, WL, WL, WL, WL, WL, DR, DR, WL, WL, WL, WL, WL],
@@ -41,8 +40,8 @@ export const canvas: ICanvas = [
   [WL, MV, MV, CH, MV, MV, MV, MV, MV, MV, MV, MV, MV, MV, MV, MV, MV, MV, MV, WL],
   [WL, MV, MV, MV, MV, MV, MV, MV, MV, MV, TR, MV, MV, MV, MV, MV, MV, MV, MV, WL],
   [WL, MV, MV, MV, MV, MV, MV, MV, MV, MV, MV, MV, MV, MV, MV, MV, MV, MV, MV, WL],
-  [WL, MV, MV, MV, MV, MV, MV, MV, TR, MV, DE, DO, MV, MV, MV, MV, MV, MV, MV, WL],
-  [WL, MV, MV, MV, MV, MV, MV, MV, MV, MV, DO, DO, MV, MV, MV, MV, MV, MV, MV, WL],
+  [WL, MV, MV, MV, MV, MV, MV, MV, TR, MV, DE, MV, MV, MV, MV, MV, MV, MV, MV, WL],
+  [WL, MV, MV, MV, MV, MV, MV, MV, MV, MV, MV, MV, MV, MV, MV, MV, MV, MV, MV, WL],
   [WL, MV, MV, MV, MV, MV, MV, MV, MV, MV, MV, MV, MV, MV, MV, MV, MV, MV, MV, WL],
   [WL, MV, MV, MV, MV, MV, MV, MV, MV, MV, MV, MV, MV, MV, MV, MV, MV, MV, MV, WL],
   [WL, MV, MV, MV, MV, MV, MV, MV, MV, MV, MV, MV, MV, MV, MV, MV, TR, MV, MV, WL],
@@ -80,7 +79,6 @@ function handleNewPosition(currentPosition: IPosition, newPosition: IPosition) {
   const nextMoveIsAllowed = checkNextMoveIsValid(newPosition);
 
   if (nextMoveIsAllowed) {
-    updateCanvas(currentPosition, newPosition);
     return newPosition;
   }
 
@@ -88,12 +86,15 @@ function handleNewPosition(currentPosition: IPosition, newPosition: IPosition) {
 }
 
 function checkNextMoveIsValid(canvasPosition: IPosition) {
-  return canvas[canvasPosition.y][canvasPosition.x] === 0;
+  return (
+    canvas[canvasPosition.y][canvasPosition.x] === ECanvas.MOVIMENT ||
+    canvas[canvasPosition.y][canvasPosition.x] === ECanvas.MOVIMENT
+  );
 }
 
 function updateCanvas(currentPosition: IPosition, newPosition: IPosition) {
   const value = canvas[currentPosition.y][currentPosition.x];
 
-  canvas[currentPosition.y][currentPosition.x] = 0;
+  canvas[currentPosition.y][currentPosition.x] = ECanvas.MOVIMENT;
   canvas[newPosition.y][newPosition.x] = value;
 }

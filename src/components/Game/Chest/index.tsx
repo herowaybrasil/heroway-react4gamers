@@ -1,6 +1,7 @@
 import React from 'react';
-import { IPosition } from '../../../services/moviment';
+import { IPosition } from '../../../services/canvas';
 import { TILE_SIZE } from '../../../settings/constants';
+import './Chest.css';
 
 interface IProps {
   position: IPosition;
@@ -18,7 +19,7 @@ function Chest(props: IProps) {
         backgroundImage: `url(./assets/chest.png)`,
         backgroundRepeat: 'no-repeat',
         backgroundPosition: `0px 0px`,
-        // animation: 'player 1s steps(4) infinite',
+        animation: 'chest-animation 1s steps(2) forwards',
       }}
     />
   );

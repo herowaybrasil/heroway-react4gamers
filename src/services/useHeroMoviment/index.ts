@@ -1,11 +1,13 @@
 import useEventListener from '@use-it/event-listener';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { EDirections } from '../../settings/constants';
-import { getNewPosition, IPosition } from '../moviment';
+import { IPosition } from '../canvas';
+import { CanvasContext } from '../canvas/canvas.context';
 
 export default function useHeroMoviment(initialPositions: IPosition) {
   const [position, setPosition] = useState<IPosition>(initialPositions);
   const [direction, setDirection] = useState<EDirections>(EDirections.LEFT);
+  const { getNewPosition } = useContext(CanvasContext);
 
   useEventListener<React.KeyboardEvent<HTMLDivElement>>('keydown', event => {
     const { key } = event;

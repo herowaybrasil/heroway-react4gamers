@@ -1,11 +1,13 @@
 import useInterval from '@use-it/interval';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { EDirections } from '../../settings/constants';
-import { getNewPosition, IPosition } from '../moviment';
+import { IPosition } from '../canvas';
+import { CanvasContext } from '../canvas/canvas.context';
 
 export default function useEnemyMoviment(initialPositions: IPosition) {
   const [position, setPosition] = useState<IPosition>(initialPositions);
   const [direction, setDirection] = useState<EDirections>(EDirections.LEFT);
+  const { getNewPosition } = useContext(CanvasContext);
 
   useInterval(move, 1000);
 

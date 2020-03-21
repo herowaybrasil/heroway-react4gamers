@@ -1,8 +1,8 @@
 import React from 'react';
-import { IPosition } from '../../../services/moviment';
+import { IPosition } from '../../../services/canvas';
 import useHeroMoviment from '../../../services/useHeroMoviment';
 import { HELMET_OFFSET, TILE_SIZE } from '../../../settings/constants';
-import './Player.css';
+import './Hero.css';
 
 interface IProps {
   initialPosition: IPosition;
@@ -22,7 +22,7 @@ function Hero(props: IProps) {
         backgroundImage: `url(./assets/hero.png)`,
         backgroundRepeat: 'no-repeat',
         backgroundPosition: `0px -${TILE_SIZE - HELMET_OFFSET}px`,
-        animation: 'player 1s steps(4) infinite',
+        animation: 'hero-animation 1s steps(4) infinite',
         transform: `scaleX(${direction === 'LEFT' ? -1 : 1})`,
       }}
     />

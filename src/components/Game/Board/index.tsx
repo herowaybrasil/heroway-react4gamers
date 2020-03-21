@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { ECanvas, ICanvas } from '../../../services/moviment';
+import { ECanvas, ICanvas } from '../../../services/canvas';
 import { GAME_SIZE } from '../../../settings/constants';
 import Chest from '../Chest';
 import Demon from '../Demon';

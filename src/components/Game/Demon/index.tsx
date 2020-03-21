@@ -1,5 +1,5 @@
 import React from 'react';
-import { IPosition } from '../../../services/moviment';
+import { IPosition } from '../../../services/canvas';
 import useEnemyMoviment from '../../../services/useEnemyMoviment';
 import { DEMON_TILE_SIZE, EDirections, TILE_SIZE } from '../../../settings/constants';
 import './Demon.css';
@@ -23,7 +23,7 @@ function Demon(props: IProps) {
         backgroundImage: `url(./assets/demon.png)`,
         backgroundRepeat: 'no-repeat',
         backgroundPosition: `0px 0px`,
-        animation: 'demon 1s steps(4) infinite',
+        animation: 'demon-animation 1s steps(4) infinite',
         transform: `scaleX(${direction === EDirections.LEFT ? -1 : 1})`,
         zIndex: 1,
       }}
