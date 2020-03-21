@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { EDirections } from '../../settings/constants';
 import { checkNextMoveIsValid, getNewPosition, IPosition } from '../moviment';
 
-export default function useEnemyMoviment(initialPositions: IPosition) {
+export default function useEnemyMoviment(initialPositions: IPosition, sqm?: number) {
   const [position, setPosition] = useState<IPosition>(initialPositions);
   const [direction, setDirection] = useState<EDirections>(EDirections.LEFT);
 
@@ -13,7 +13,7 @@ export default function useEnemyMoviment(initialPositions: IPosition) {
       const keyDirection = directions[random];
 
       const newPosition = getNewPosition(keyDirection, position);
-      const nextMoveIsAllowed = checkNextMoveIsValid(newPosition);
+      const nextMoveIsAllowed = checkNextMoveIsValid(newPosition, sqm);
 
       if (nextMoveIsAllowed) {
         setPosition(newPosition);
@@ -25,7 +25,7 @@ export default function useEnemyMoviment(initialPositions: IPosition) {
     }
 
     // setTimeout(move, 1000);
-  }, [position]);
+  }, [position, sqm]);
 
   return { position, direction };
 }

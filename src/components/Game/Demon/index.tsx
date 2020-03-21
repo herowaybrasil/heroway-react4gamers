@@ -24,6 +24,7 @@ function Demon(props: IProps) {
         backgroundPosition: `0px 0px`,
         animation: 'demon 1s steps(4) infinite',
         transform: `scaleX(${direction === 'LEFT' ? -1 : 1})`,
+        zIndex: 1,
       }}
     />
   );
