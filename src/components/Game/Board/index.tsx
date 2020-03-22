@@ -1,5 +1,6 @@
-import React, { PureComponent } from 'react';
-import { ECanvas, ICanvas } from '../../../services/canvas';
+import React, { PropsWithChildren, useContext, useEffect, useState } from 'react';
+import { ECanvas, ICanvas } from '../../../services/canvas/helpers';
+import { ChestsContext } from '../../../services/chests';
 import { GAME_SIZE } from '../../../settings/constants';
 import Chest from '../Chest';
 import Demon from '../Demon';
@@ -11,59 +12,76 @@ interface IProps {
   canvas: ICanvas;
 }
 
-class Board extends PureComponent<IProps> {
-  state = { enemies: undefined };
+function Board(props: PropsWithChildren<IProps>) {
+  const { openedChests, totalChests } = useContext(ChestsContext);
 
-  componentDidMount() {
-    this.renderEnemies();
-  }
+  const [enemies, setEnemies] = useState<JSX.Element[]>([]);
 
-  renderEnemies = () => {
-    const canvas = this.props.canvas;
-    const enemies = [];
+  useEffect(() => {
+    renderEnemies();
 
-    for (let y = 0; y < canvas.length; y++) {
-      const canvasY = canvas[y];
+    function renderEnemies() {
+      const canvas = props.canvas;
+      const en = [];
 
-      for (let x = 0; x < canvasY.length; x++) {
-        const canvasYX = canvas[y][x];
-        const position = { x: x, y: y };
-        const key = `${x}-${y}`;
+      for (let y = 0; y < canvas.length; y++) {
+        const canvasY = canvas[y];
 
-        if (canvasYX === ECanvas.TRAP) {
-          enemies.push(<Trap key={key} position={position} />);
-        }
+        for (let x = 0; x < canvasY.length; x++) {
+          const canvasYX = canvas[y][x];
+          const position = { x: x, y: y };
+          const key = `${x}-${y}`;
 
-        if (canvasYX === ECanvas.MINI_DEMON) {
-          enemies.push(<MiniDemon key={key} initialPosition={position} />);
-        }
+          if (canvasYX === ECanvas.TRAP) {
+            en.push(<Trap key={key} position={position} />);
+          }
 
-        if (canvasYX === ECanvas.DEMON) {
-          enemies.push(<Demon key={key} initialPosition={position} />);
-        }
+          if (canvasYX === ECanvas.MINI_DEMON) {
+            en.push(<MiniDemon key={key} initialPosition={position} />);
+          }
 
-        if (canvasYX === ECanvas.CHEST) {
-          enemies.push(<Chest key={key} position={position} />);
-        }
+          if (canvasYX === ECanvas.DEMON) {
+            en.push(<Demon key={key} initialPosition={position} />);
+          }
 
-        if (canvasYX === ECanvas.HERO) {
-          enemies.push(<Hero key={key} initialPosition={position} />);
+          if (canvasYX === ECanvas.CHEST) {
+            en.push(<Chest key={key} position={position} />);
+          }
+
+          if (canvasYX === ECanvas.HERO) {
+            en.push(<Hero key={key} initialPosition={position} />);
+          }
         }
       }
+
+      setEnemies(en);
     }
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-    this.setState({ enemies });
-  };
+  return (
+    <>
+      <img src="./assets/tileset.gif" alt="Cenário" width={GAME_SIZE} height={GAME_SIZE} />
 
-  render() {
-    return (
-      <>
-        <img src="./assets/tileset.gif" alt="Cenário" width={GAME_SIZE} height={GAME_SIZE} />
-        {this.props.children}
-        {this.state.enemies}
-      </>
-    );
-  }
+      {openedChests.total === totalChests && (
+        <img
+          style={{
+            position: 'absolute',
+            width: 190,
+            height: 96,
+            zIndex: 1,
+            left: 577,
+          }}
+          src="./assets/opened-door.png"
+          alt="Porta Aberta"
+          width={GAME_SIZE}
+          height={GAME_SIZE}
+        />
+      )}
+
+      {props.children}
+      {enemies}
+    </>
+  );
 }
 
 export default Board;

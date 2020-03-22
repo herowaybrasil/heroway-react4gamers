@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import CanvasProvider, { CanvasContext } from '../../services/canvas/canvas.context';
+import { CanvasContext } from '../../services/canvas';
 import Board from './Board';
 import Debugger from './Debugger';
 
@@ -17,18 +17,9 @@ import Debugger from './Debugger';
 // <MiniDemon initialPosition={{ x: 17, y: 16 }} />
 // <Hero initialPosition={{ x: 1, y: 17 }} />
 
-function Blah({ debug }: any) {
-  const { canvas } = useContext(CanvasContext);
-
-  return (
-    <Debugger enabled={debug} canvas={canvas}>
-      <Board canvas={canvas} />
-    </Debugger>
-  );
-}
-
 function Game() {
-  const [debug, setDebug] = useState(false);
+  const [debug, setDebug] = useState<boolean>(false);
+  const { canvas } = useContext(CanvasContext);
 
   return (
     <>
@@ -43,15 +34,16 @@ function Game() {
           color: 'white',
           background: 'red',
           cursor: 'pointer',
-          zIndex: 1,
+          zIndex: 2,
         }}
         onClick={() => setDebug(!debug)}
       >
         DEBUG
       </button>
-      <CanvasProvider>
-        <Blah debug={debug} />
-      </CanvasProvider>
+
+      <Debugger enabled={debug} canvas={canvas}>
+        <Board canvas={canvas} />
+      </Debugger>
     </>
   );
 }

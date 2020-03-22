@@ -1,6 +1,6 @@
 import React from 'react';
-import { IPosition } from '../../../services/canvas';
-import useHeroMoviment from '../../../services/useHeroMoviment';
+import useHeroMoviment from '../../../hooks/useHeroMoviment';
+import { IPosition } from '../../../services/canvas/helpers';
 import { HELMET_OFFSET, TILE_SIZE } from '../../../settings/constants';
 import './Hero.css';
 
@@ -24,6 +24,7 @@ function Hero(props: IProps) {
         backgroundPosition: `0px -${TILE_SIZE - HELMET_OFFSET}px`,
         animation: 'hero-animation 1s steps(4) infinite',
         transform: `scaleX(${direction === 'LEFT' ? -1 : 1})`,
+        zIndex: 1,
       }}
     />
   );

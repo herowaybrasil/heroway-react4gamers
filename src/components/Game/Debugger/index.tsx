@@ -1,5 +1,5 @@
 import React, { PropsWithChildren, useEffect, useState } from 'react';
-import { ICanvas } from '../../../services/canvas';
+import { ICanvas } from '../../../services/canvas/helpers';
 import Tile from './Tile';
 
 interface IProps {
@@ -8,7 +8,7 @@ interface IProps {
 }
 
 function Debugger(props: PropsWithChildren<IProps>) {
-  const [tiles, setTiles] = useState<any>([]);
+  const [tiles, setTiles] = useState<JSX.Element[]>([]);
 
   useEffect(() => {
     function loadTiles() {

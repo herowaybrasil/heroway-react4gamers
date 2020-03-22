@@ -1,5 +1,6 @@
-import React from 'react';
-import { IPosition } from '../../../services/canvas';
+import React, { useContext } from 'react';
+import { IPosition } from '../../../services/canvas/helpers';
+import { ChestsContext } from '../../../services/chests';
 import { TILE_SIZE } from '../../../settings/constants';
 import './Chest.css';
 
@@ -8,6 +9,11 @@ interface IProps {
 }
 
 function Chest(props: IProps) {
+  const chestsContext = useContext(ChestsContext);
+  const enableAnimation = chestsContext.openedChests.positions.find(
+    position => position.x === props.position.x && position.y === props.position.y
+  );
+
   return (
     <div
       style={{
@@ -19,7 +25,7 @@ function Chest(props: IProps) {
         backgroundImage: `url(./assets/chest.png)`,
         backgroundRepeat: 'no-repeat',
         backgroundPosition: `0px 0px`,
-        animation: 'chest-animation 1s steps(2) forwards',
+        animation: enableAnimation && 'chest-animation 1s steps(2) forwards',
       }}
     />
   );

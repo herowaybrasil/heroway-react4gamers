@@ -1,5 +1,5 @@
 import React from 'react';
-import { ECanvas, IPosition } from '../../../../services/canvas';
+import { ECanvas, IPosition } from '../../../../services/canvas/helpers';
 import { TILE_SIZE } from '../../../../settings/constants';
 
 interface IProps {
@@ -9,7 +9,7 @@ interface IProps {
 function Tile(props: IProps) {
   function getTileColor() {
     switch (props.canvasId) {
-      case ECanvas.MOVIMENT:
+      case ECanvas.FLOOR:
         return 'darkgray';
 
       case ECanvas.WALL:
@@ -47,6 +47,7 @@ function Tile(props: IProps) {
         width: TILE_SIZE,
         height: TILE_SIZE,
         fontSize: 32,
+        zIndex: 2,
       }}
     >
       {props.canvasId}
