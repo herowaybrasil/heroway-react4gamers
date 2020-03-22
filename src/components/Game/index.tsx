@@ -34,7 +34,7 @@ function Game() {
           color: 'white',
           background: 'red',
           cursor: 'pointer',
-          zIndex: 2,
+          zIndex: 3,
         }}
         onClick={() => setDebug(!debug)}
       >

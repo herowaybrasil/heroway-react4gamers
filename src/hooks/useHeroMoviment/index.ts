@@ -1,7 +1,7 @@
 import useEventListener from '@use-it/event-listener';
 import { useContext, useState } from 'react';
 import { CanvasContext } from '../../services/canvas';
-import { IPosition } from '../../services/canvas/helpers';
+import { IPosition } from '../../services/canvas/types';
 import { ChestsContext } from '../../services/chests';
 import { EDirections } from '../../settings/constants';
 
@@ -17,22 +17,22 @@ export default function useHeroMoviment(initialPositions: IPosition) {
     }
 
     const keyDirection = event.key.replace('Arrow', '').toUpperCase() as EDirections;
-    const status = updateCanvas(keyDirection, position, 'Hero');
-    setPosition(status.position);
+    const movement = updateCanvas(keyDirection, position, 'Hero');
+    setPosition(movement.position);
 
     if (keyDirection === EDirections.LEFT || keyDirection === EDirections.RIGHT) {
       setDirection(keyDirection);
     }
 
-    if (status.nextMoveIsAllowed.dead) {
+    if (movement.consequences.dead) {
       console.log('Você morreu!');
     }
 
-    if (status.nextMoveIsAllowed.chest) {
-      updateOpenedChests(status.position);
+    if (movement.consequences.chest) {
+      updateOpenedChests(movement.position);
     }
 
-    if (totalChests === openedChests.total && status.nextMoveIsAllowed.door) {
+    if (totalChests === openedChests.total && movement.consequences.door) {
       console.log('você ganhou!');
     }
   });

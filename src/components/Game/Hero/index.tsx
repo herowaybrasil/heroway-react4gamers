@@ -1,6 +1,6 @@
 import React from 'react';
 import useHeroMoviment from '../../../hooks/useHeroMoviment';
-import { IPosition } from '../../../services/canvas/helpers';
+import { IPosition } from '../../../services/canvas/types';
 import { HELMET_OFFSET, TILE_SIZE } from '../../../settings/constants';
 import './Hero.css';
 

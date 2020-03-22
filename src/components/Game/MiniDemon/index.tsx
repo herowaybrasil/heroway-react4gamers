@@ -1,6 +1,6 @@
 import React from 'react';
 import useEnemyMoviment from '../../../hooks/useEnemyMoviment';
-import { IPosition } from '../../../services/canvas/helpers';
+import { IPosition } from '../../../services/canvas/types';
 import { EDirections, HELMET_OFFSET, TILE_SIZE } from '../../../settings/constants';
 import './MiniDemon.css';
 

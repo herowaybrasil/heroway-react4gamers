@@ -1,6 +1,6 @@
 import React from 'react';
 import useEnemyMoviment from '../../../hooks/useEnemyMoviment';
-import { IPosition } from '../../../services/canvas/helpers';
+import { IPosition } from '../../../services/canvas/types';
 import { DEMON_TILE_SIZE, EDirections, TILE_SIZE } from '../../../settings/constants';
 import './Demon.css';
 

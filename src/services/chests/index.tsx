@@ -1,16 +1,8 @@
 import React, { createContext, PropsWithChildren, useState } from 'react';
-import { IPosition } from '../canvas/helpers';
+import { IPosition } from '../canvas/types';
+import { IChestsContext } from './types';
 
-interface IContext {
-  totalChests: number;
-  openedChests: {
-    total: number;
-    positions: IPosition[];
-  };
-  updateOpenedChests: (position: IPosition) => void;
-}
-
-export const ChestsContext = createContext<IContext>({
+export const ChestsContext = createContext<IChestsContext>({
   totalChests: 0,
   openedChests: { total: 0, positions: [] },
   updateOpenedChests: () => null,

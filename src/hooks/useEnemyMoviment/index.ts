@@ -1,7 +1,7 @@
 import useInterval from '@use-it/interval';
 import { useContext, useState } from 'react';
 import { CanvasContext } from '../../services/canvas';
-import { IPosition } from '../../services/canvas/helpers';
+import { IPosition } from '../../services/canvas/types';
 import { EDirections } from '../../settings/constants';
 
 export default function useEnemyMoviment(initialPositions: IPosition) {
@@ -16,8 +16,8 @@ export default function useEnemyMoviment(initialPositions: IPosition) {
     const random = Math.floor(Math.random() * directions.length);
     const keyDirection = directions[random];
 
-    const status = updateCanvas(keyDirection, position, 'Enemy');
-    setPosition(status.position);
+    const movement = updateCanvas(keyDirection, position, 'Enemy');
+    setPosition(movement.position);
 
     if (keyDirection === EDirections.LEFT || keyDirection === EDirections.RIGHT) {
       setDirection(keyDirection);

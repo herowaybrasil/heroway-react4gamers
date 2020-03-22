@@ -1,5 +1,5 @@
 import React from 'react';
-import { ECanvas, IPosition } from '../../../../services/canvas/helpers';
+import { ECanvas, IPosition } from '../../../../services/canvas/types';
 import { TILE_SIZE } from '../../../../settings/constants';
 
 interface IProps {
@@ -23,7 +23,6 @@ function Tile(props: IProps) {
 
       case ECanvas.MINI_DEMON:
       case ECanvas.DEMON:
-      case ECanvas.DEMON_OFFSET:
         return 'red';
 
       case ECanvas.CHEST:

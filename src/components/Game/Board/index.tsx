@@ -1,5 +1,5 @@
 import React, { PropsWithChildren, useContext, useEffect, useState } from 'react';
-import { ECanvas, ICanvas } from '../../../services/canvas/helpers';
+import { ECanvas, ICanvas } from '../../../services/canvas/types';
 import { ChestsContext } from '../../../services/chests';
 import { GAME_SIZE } from '../../../settings/constants';
 import Chest from '../Chest';
@@ -43,6 +43,15 @@ function Board(props: PropsWithChildren<IProps>) {
           if (canvasYX === ECanvas.DEMON) {
             en.push(<Demon key={key} initialPosition={position} />);
           }
+
+          // if (
+          //   canvas[y][x] === ECanvas.DEMON &&
+          //   canvas[y][x + 1] === ECanvas.DEMON &&
+          //   canvas[y + 1][x] === ECanvas.DEMON &&
+          //   canvas[y][x + 1] === ECanvas.DEMON
+          // ) {
+          //   en.push(<Demon key={key} initialPosition={position} />);
+          // }
 
           if (canvasYX === ECanvas.CHEST) {
             en.push(<Chest key={key} position={position} />);

@@ -1,5 +1,5 @@
 import React, { PropsWithChildren, useEffect, useState } from 'react';
-import { ICanvas } from '../../../services/canvas/helpers';
+import { ICanvas } from '../../../services/canvas/types';
 import Tile from './Tile';
 
 interface IProps {
