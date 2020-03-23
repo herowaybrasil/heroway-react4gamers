@@ -19,7 +19,7 @@ function Trap(props: IProps) {
         backgroundImage: `url(./assets/trap.png)`,
         backgroundRepeat: 'no-repeat',
         backgroundPosition: `0px 0px`,
-        animation: 'trap-animation 1s steps(4) infinite',
+        animation: 'trap-animation 1s steps(8) infinite',
       }}
     />
   );
