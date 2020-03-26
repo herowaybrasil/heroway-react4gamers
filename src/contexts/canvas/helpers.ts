@@ -1,7 +1,8 @@
 import { EDirections } from '../../settings/constants';
-import { ECanvas, ICanvas, IConsequences, IPosition, IWalker } from './types';
+import { ECanvas, ICanvas, ICanvasMap, IConsequences, IPosition, IWalker } from './types';
 
-export function getInitialCanvas(): ICanvas {
+export const INITIAL_CANVAS = getInitialCanvas();
+function getInitialCanvas(): ICanvas {
   const {
     FLOOR: FL,
     WALL: WL,
@@ -36,6 +37,26 @@ export function getInitialCanvas(): ICanvas {
     [WL, WL, WL, WL, WL, WL, WL, WL, WL, WL, WL, WL, WL, WL, WL, WL, WL, WL, WL, WL],
   ];
 }
+
+export const INITIAL_CANVAS_MAP = getInitialCanvasMap();
+function getInitialCanvasMap(): ICanvasMap {
+  const canvas = getInitialCanvas();
+
+  const map: ICanvasMap = {};
+  for (let y = 0; y < canvas.length; y++) {
+    const canvasY = canvas[y];
+
+    for (let x = 0; x < canvasY.length; x++) {
+      const canvasYX = canvas[y][x];
+      const position = { x: x, y: y };
+      const key = `${x}-${y}`;
+
+      map[key] = { tile: canvasYX, position };
+    }
+  }
+
+  return map;
+};
 
 export function handleWalk(direction: EDirections, position: IPosition): IPosition {
   switch (direction) {

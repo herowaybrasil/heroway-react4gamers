@@ -4,6 +4,10 @@ export type ICanvas = ECanvas[][];
 
 export type IWalker = 'Hero' | 'Enemy';
 
+export interface ICanvasMap {
+  [x: string]: { tile: ECanvas, position: IPosition }
+};
+
 export interface IPosition {
   x: number;
   y: number;

@@ -1,8 +1,20 @@
 import React, { createContext, PropsWithChildren, useState } from 'react';
+import { INITIAL_CANVAS_MAP } from '../canvas/helpers';
+import { ECanvas } from '../canvas/types';
 import { IChestsContext } from './types';
 
+const numberOfChests: number = Object.keys(INITIAL_CANVAS_MAP).reduce((prev, key) => {
+  const { tile } = INITIAL_CANVAS_MAP[key];
+
+  if (tile === ECanvas.CHEST) {
+    return prev + 1;
+  }
+
+  return prev;
+}, 0);
+
 export const ChestsContext = createContext<IChestsContext>({
-  totalChests: 0,
+  totalChests: numberOfChests,
   openedChests: { total: 0, positions: [] },
   updateOpenedChests: () => null,
 });

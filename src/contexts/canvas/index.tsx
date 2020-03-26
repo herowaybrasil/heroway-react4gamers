@@ -1,6 +1,6 @@
 import React, { createContext, PropsWithChildren, useState } from 'react';
 import { EDirections } from '../../settings/constants';
-import { checkNextMoveIsValid, getInitialCanvas, handleWalk } from './helpers';
+import { checkNextMoveIsValid, handleWalk, INITIAL_CANVAS } from './helpers';
 import { ECanvas, ICanvas, ICanvasMoviment, IPosition, IWalker } from './types';
 
 export interface ICanvasContext {
@@ -19,7 +19,7 @@ export const CanvasContext = createContext<ICanvasContext>({
 
 function CanvasProvider(props: PropsWithChildren<{}>) {
   const [canvasState, setCanvasState] = useState<ICanvasContext>({
-    canvas: getInitialCanvas(),
+    canvas: INITIAL_CANVAS,
     updateCanvas: (direction, currentPosition, walker) => {
       const nextPosition = handleWalk(direction, currentPosition);
       const nextMove = checkNextMoveIsValid(canvasState.canvas, nextPosition, walker);

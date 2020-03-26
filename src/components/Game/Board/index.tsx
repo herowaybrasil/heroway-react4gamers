@@ -1,4 +1,5 @@
 import React, { PropsWithChildren, useEffect, useState } from 'react';
+import { INITIAL_CANVAS_MAP } from '../../../contexts/canvas/helpers';
 import { ECanvas, ICanvas } from '../../../contexts/canvas/types';
 import { GAME_SIZE } from '../../../settings/constants';
 import Chest from '../Chest';
@@ -14,46 +15,39 @@ interface IProps {
 }
 
 function Board(props: PropsWithChildren<IProps>) {
-  const [enemies, setEnemies] = useState<JSX.Element[]>([]);
+  const [enemies, setEnemies] = useState<(JSX.Element | null)[]>([]);
 
   useEffect(() => {
     renderEnemies();
 
     function renderEnemies() {
-      const canvas = props.canvas;
-      const en = [];
+      const enemiesMap = Object.keys(INITIAL_CANVAS_MAP).map((key) => {
+        const { tile, position } = INITIAL_CANVAS_MAP[key];
 
-      for (let y = 0; y < canvas.length; y++) {
-        const canvasY = canvas[y];
-
-        for (let x = 0; x < canvasY.length; x++) {
-          const canvasYX = canvas[y][x];
-          const position = { x: x, y: y };
-          const key = `${x}-${y}`;
-
-          if (canvasYX === ECanvas.TRAP) {
-            en.push(<Trap key={key} position={position} />);
-          }
-
-          if (canvasYX === ECanvas.MINI_DEMON) {
-            en.push(<MiniDemon key={key} initialPosition={position} />);
-          }
-
-          if (canvasYX === ECanvas.DEMON) {
-            en.push(<Demon key={key} initialPosition={position} />);
-          }
-
-          if (canvasYX === ECanvas.CHEST) {
-            en.push(<Chest key={key} position={position} />);
-          }
-
-          if (canvasYX === ECanvas.HERO) {
-            en.push(<Hero key={key} initialPosition={position} />);
-          }
+        if (tile === ECanvas.TRAP) {
+          return <Trap key={key} position={position} />;
         }
-      }
 
-      setEnemies(en);
+        if (tile === ECanvas.MINI_DEMON) {
+          return <MiniDemon key={key} initialPosition={position} />;
+        }
+
+        if (tile === ECanvas.DEMON) {
+          return <Demon key={key} initialPosition={position} />;
+        }
+
+        if (tile === ECanvas.CHEST) {
+          return <Chest key={key} position={position} />;
+        }
+
+        if (tile === ECanvas.HERO) {
+          return <Hero key={key} initialPosition={position} />;
+        }
+
+        return null;
+      }).filter(Boolean);
+
+      setEnemies(enemiesMap);
     }
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 

@@ -3,12 +3,12 @@ import { ECanvas, IPosition } from '../../../../contexts/canvas/types';
 import { TILE_SIZE } from '../../../../settings/constants';
 
 interface IProps {
-  canvasId: ECanvas;
+  tileId: ECanvas;
   position: IPosition;
 }
 function Tile(props: IProps) {
   function getTileColor() {
-    switch (props.canvasId) {
+    switch (props.tileId) {
       case ECanvas.FLOOR:
         return 'darkgray';
 
@@ -49,7 +49,7 @@ function Tile(props: IProps) {
         zIndex: 2,
       }}
     >
-      {props.canvasId}
+      {props.tileId}
     </div>
   );
 }
