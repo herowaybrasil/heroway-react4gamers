@@ -1,16 +1,22 @@
 import React, { PropsWithChildren, useEffect, useState } from 'react';
-import { ICanvas } from '../../../services/canvas/types';
+import { ICanvas } from '../../../contexts/canvas/types';
 import Tile from './Tile';
 
 interface IProps {
   canvas: ICanvas;
-  enabled: boolean;
 }
 
 function Debugger(props: PropsWithChildren<IProps>) {
   const [tiles, setTiles] = useState<JSX.Element[]>([]);
 
+  const [debug, setDebug] = useState<boolean>(false);
+
+
   useEffect(() => {
+    if (debug) {
+      loadTiles();
+    }
+
     function loadTiles() {
       const t = [];
       const canvas = props.canvas;
@@ -29,16 +35,30 @@ function Debugger(props: PropsWithChildren<IProps>) {
 
       setTiles(t);
     }
-
-    if (props.enabled) {
-      loadTiles();
-    }
-  }, [props.canvas, props.enabled]);
+  }, [props.canvas, debug]);
 
   return (
     <>
+      <button
+        style={{
+          position: 'absolute',
+          top: 5,
+          right: 0,
+          padding: 10,
+          border: '1px solid white',
+          fontSize: 18,
+          color: 'white',
+          background: 'red',
+          cursor: 'pointer',
+          zIndex: 3,
+        }}
+        onClick={() => setDebug(!debug)}
+      >
+        DEBUG
+      </button>
+
       {props.children}
-      {props.enabled && tiles}
+      {debug && tiles}
     </>
   );
 }

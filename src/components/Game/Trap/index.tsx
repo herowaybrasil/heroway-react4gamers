@@ -1,5 +1,5 @@
 import React from 'react';
-import { IPosition } from '../../../services/canvas/types';
+import { IPosition } from '../../../contexts/canvas/types';
 import { TILE_SIZE } from '../../../settings/constants';
 import './Trap.css';
 

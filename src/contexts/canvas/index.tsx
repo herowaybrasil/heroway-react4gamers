@@ -14,17 +14,13 @@ export interface ICanvasContext {
 
 export const CanvasContext = createContext<ICanvasContext>({
   canvas: [],
-  updateCanvas: () => null as any,
+  updateCanvas: () => ({ position: { x: 0, y: 0 }, consequences: { valid: true, dead: false, chest: false, door: false } }),
 });
 
 function CanvasProvider(props: PropsWithChildren<{}>) {
   const [canvasState, setCanvasState] = useState<ICanvasContext>({
     canvas: getInitialCanvas(),
-    updateCanvas: (
-      direction: EDirections,
-      currentPosition: IPosition,
-      walker: IWalker
-    ): ICanvasMoviment => {
+    updateCanvas: (direction, currentPosition, walker) => {
       const nextPosition = handleWalk(direction, currentPosition);
       const nextMove = checkNextMoveIsValid(canvasState.canvas, nextPosition, walker);
 

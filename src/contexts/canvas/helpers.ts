@@ -79,9 +79,11 @@ function getHeroValidMoves(pos: ECanvas) {
 }
 
 function getEnemyValidMoves(pos: ECanvas) {
+  const { FLOOR, HERO } = ECanvas;
+
   return {
-    valid: ECanvas.FLOOR === pos,
-    dead: false,
+    valid: [FLOOR, HERO].includes(pos),
+    dead: HERO === pos,
     chest: false,
     door: false,
   };

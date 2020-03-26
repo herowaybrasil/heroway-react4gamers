@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
-import { IPosition } from '../../../services/canvas/types';
-import { ChestsContext } from '../../../services/chests';
+import { IPosition } from '../../../contexts/canvas/types';
+import { ChestsContext } from '../../../contexts/chests';
 import { TILE_SIZE } from '../../../settings/constants';
 import './Chest.css';
 
@@ -10,6 +10,7 @@ interface IProps {
 
 function Chest(props: IProps) {
   const { openedChests } = useContext(ChestsContext);
+
   const enableAnimation = openedChests.positions.find(
     position => position.x === props.position.x && position.y === props.position.y
   );

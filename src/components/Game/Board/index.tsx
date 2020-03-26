@@ -1,20 +1,19 @@
-import React, { PropsWithChildren, useContext, useEffect, useState } from 'react';
-import { ECanvas, ICanvas } from '../../../services/canvas/types';
-import { ChestsContext } from '../../../services/chests';
+import React, { PropsWithChildren, useEffect, useState } from 'react';
+import { ECanvas, ICanvas } from '../../../contexts/canvas/types';
 import { GAME_SIZE } from '../../../settings/constants';
 import Chest from '../Chest';
 import Demon from '../Demon';
 import Hero from '../Hero';
 import MiniDemon from '../MiniDemon';
 import Trap from '../Trap';
+import Door from './Door';
+import GameStatus from './GameStatus';
 
 interface IProps {
   canvas: ICanvas;
 }
 
 function Board(props: PropsWithChildren<IProps>) {
-  const { openedChests, totalChests } = useContext(ChestsContext);
-
   const [enemies, setEnemies] = useState<JSX.Element[]>([]);
 
   useEffect(() => {
@@ -44,15 +43,6 @@ function Board(props: PropsWithChildren<IProps>) {
             en.push(<Demon key={key} initialPosition={position} />);
           }
 
-          // if (
-          //   canvas[y][x] === ECanvas.DEMON &&
-          //   canvas[y][x + 1] === ECanvas.DEMON &&
-          //   canvas[y + 1][x] === ECanvas.DEMON &&
-          //   canvas[y][x + 1] === ECanvas.DEMON
-          // ) {
-          //   en.push(<Demon key={key} initialPosition={position} />);
-          // }
-
           if (canvasYX === ECanvas.CHEST) {
             en.push(<Chest key={key} position={position} />);
           }
@@ -71,21 +61,8 @@ function Board(props: PropsWithChildren<IProps>) {
     <>
       <img src="./assets/tileset.gif" alt="Cenário" width={GAME_SIZE} height={GAME_SIZE} />
 
-      {openedChests.total === totalChests && (
-        <img
-          style={{
-            position: 'absolute',
-            width: 190,
-            height: 96,
-            zIndex: 1,
-            left: 577,
-          }}
-          src="./assets/opened-door.png"
-          alt="Porta Aberta"
-          width={GAME_SIZE}
-          height={GAME_SIZE}
-        />
-      )}
+      <Door />
+      <GameStatus />
 
       {props.children}
       {enemies}

@@ -1,5 +1,4 @@
 import React, { createContext, PropsWithChildren, useState } from 'react';
-import { IPosition } from '../canvas/types';
 import { IChestsContext } from './types';
 
 export const ChestsContext = createContext<IChestsContext>({
@@ -9,13 +8,13 @@ export const ChestsContext = createContext<IChestsContext>({
 });
 
 function ChestsProvider(props: PropsWithChildren<{}>) {
-  const [chestsState, setChestsState] = useState({
+  const [chestsState, setChestsState] = useState<IChestsContext>({
     totalChests: 2,
     openedChests: {
       total: 0,
-      positions: [] as IPosition[],
+      positions: [],
     },
-    updateOpenedChests: (position: IPosition) => {
+    updateOpenedChests: (position) => {
       setChestsState(prevState => ({
         ...prevState,
         openedChests: {

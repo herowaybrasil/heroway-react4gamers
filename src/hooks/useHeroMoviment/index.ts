@@ -1,17 +1,22 @@
 import useEventListener from '@use-it/event-listener';
 import { useContext, useState } from 'react';
-import { CanvasContext } from '../../services/canvas';
-import { IPosition } from '../../services/canvas/types';
-import { ChestsContext } from '../../services/chests';
+import { CanvasContext } from '../../contexts/canvas';
+import { IPosition } from '../../contexts/canvas/types';
+import { ChestsContext } from '../../contexts/chests';
+import { GameStatusContext } from '../../contexts/gameStatus';
 import { EDirections } from '../../settings/constants';
 
 export default function useHeroMoviment(initialPositions: IPosition) {
-  const [position, setPosition] = useState<IPosition>(initialPositions);
-  const [direction, setDirection] = useState<EDirections>(EDirections.LEFT);
   const { updateCanvas } = useContext(CanvasContext);
+  const { updateIsWinner, updateIsDead, updateSteps } = useContext(GameStatusContext);
   const { updateOpenedChests, openedChests, totalChests } = useContext(ChestsContext);
 
-  useEventListener<React.KeyboardEvent<HTMLDivElement>>('keydown', event => {
+  const [position, setPosition] = useState<IPosition>(initialPositions);
+  const [direction, setDirection] = useState<EDirections>(EDirections.RIGHT);
+
+  useEventListener('keydown', move);
+
+  function move(event: React.KeyboardEvent<HTMLDivElement>) {
     if (event.key.indexOf('Arrow') === -1) {
       return;
     }
@@ -19,13 +24,14 @@ export default function useHeroMoviment(initialPositions: IPosition) {
     const keyDirection = event.key.replace('Arrow', '').toUpperCase() as EDirections;
     const movement = updateCanvas(keyDirection, position, 'Hero');
     setPosition(movement.position);
+    updateSteps();
 
     if (keyDirection === EDirections.LEFT || keyDirection === EDirections.RIGHT) {
       setDirection(keyDirection);
     }
 
     if (movement.consequences.dead) {
-      console.log('Você morreu!');
+      updateIsDead();
     }
 
     if (movement.consequences.chest) {
@@ -33,9 +39,9 @@ export default function useHeroMoviment(initialPositions: IPosition) {
     }
 
     if (totalChests === openedChests.total && movement.consequences.door) {
-      console.log('você ganhou!');
+      updateIsWinner();
     }
-  });
+  }
 
   return { position, direction };
 }

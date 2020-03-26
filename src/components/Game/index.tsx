@@ -1,5 +1,5 @@
-import React, { useContext, useState } from 'react';
-import { CanvasContext } from '../../services/canvas';
+import React, { useContext } from 'react';
+import { CanvasContext } from '../../contexts/canvas';
 import Board from './Board';
 import Debugger from './Debugger';
 
@@ -18,33 +18,12 @@ import Debugger from './Debugger';
 // <Hero initialPosition={{ x: 1, y: 17 }} />
 
 function Game() {
-  const [debug, setDebug] = useState<boolean>(false);
   const { canvas } = useContext(CanvasContext);
 
   return (
-    <>
-      <button
-        style={{
-          position: 'absolute',
-          top: 10,
-          right: 10,
-          padding: 10,
-          border: '1px solid white',
-          fontSize: 18,
-          color: 'white',
-          background: 'red',
-          cursor: 'pointer',
-          zIndex: 3,
-        }}
-        onClick={() => setDebug(!debug)}
-      >
-        DEBUG
-      </button>
-
-      <Debugger enabled={debug} canvas={canvas}>
-        <Board canvas={canvas} />
-      </Debugger>
-    </>
+    <Debugger canvas={canvas}>
+      <Board canvas={canvas} />
+    </Debugger>
   );
 }
 
