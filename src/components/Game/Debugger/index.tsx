@@ -1,5 +1,5 @@
 import React, { PropsWithChildren, useEffect, useState } from 'react';
-import { INITIAL_CANVAS_MAP } from '../../../contexts/canvas/helpers';
+import { getCanvasMap } from '../../../contexts/canvas/helpers';
 import { ICanvas } from '../../../contexts/canvas/types';
 import Tile from './Tile';
 
@@ -19,8 +19,10 @@ function Debugger(props: PropsWithChildren<IProps>) {
     }
 
     function loadTiles() {
-      const tilesMap = Object.keys(INITIAL_CANVAS_MAP).map((key) => {
-        const { tile, position } = INITIAL_CANVAS_MAP[key];
+      const canvas = getCanvasMap(props.canvas);
+
+      const tilesMap = Object.keys(canvas).map((key) => {
+        const { tile, position } = canvas[key];
 
         return <Tile key={key} tileId={tile} position={position} />
 

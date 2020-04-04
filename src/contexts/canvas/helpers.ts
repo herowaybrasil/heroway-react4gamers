@@ -38,10 +38,8 @@ function getInitialCanvas(): ICanvas {
   ];
 }
 
-export const INITIAL_CANVAS_MAP = getInitialCanvasMap();
-function getInitialCanvasMap(): ICanvasMap {
-  const canvas = getInitialCanvas();
-
+export const INITIAL_CANVAS_MAP = getCanvasMap(INITIAL_CANVAS);
+export function getCanvasMap(canvas: ICanvas): ICanvasMap {
   const map: ICanvasMap = {};
   for (let y = 0; y < canvas.length; y++) {
     const canvasY = canvas[y];
